@@ -43,44 +43,52 @@ class Option:
 
 
 
-# string train_help()
+def train_help():
+#--- this should be a docstring / __str__ / __repr__ ---
 # {
-#     return string(
-# "usage: mf-train [options] training_set_file [model_file]\n"
-# "\n"
-# "options:\n"
-# "-l1 <lambda>,<lambda>: set L1-regularization parameters for P and Q (default 0)\n"
-# "  P and Q share the same lambda if only one lambda is specified\n"
-# "-l2 <lambda>,<lambda>: set L2-regularization parameters for P and Q (default 0.1)\n"
-# "  P and Q share the same lambda if only one lambda is specified\n"
-# "-f <loss>: set loss function (default 0)\n"
-# "  for real-valued matrix factorization\n"
-# "\t 0 -- squared error (L2-norm)\n"
-# "\t 1 -- absolute error (L1-norm)\n"
-# "\t 2 -- generalized KL-divergence\n"
-# "  for binary matrix factorization\n"
-# "\t 5 -- logarithmic loss\n"
-# "\t 6 -- squared hinge loss\n"
-# "\t 7 -- hinge loss\n"
-# "  for one-class matrix factorization\n"
-# "\t10 -- row-oriented pairwise logarithmic loss\n"
-# "\t11 -- column-oriented pairwise logarithmic loss\n"
-# "-k <dimensions>: set number of dimensions (default 8)\n"
-# "-t <iter>: set number of iterations (default 20)\n"
-# "-r <eta>: set learning rate (default 0.1)\n"
-# "-s <threads>: set number of threads (default 12)\n"
-# "-n <bins>: set number of bins (may be adjusted by LIBMF)\n"
-# "-p <path>: set path to the validation set\n"
-# "-v <fold>: set number of folds for cross validation\n"
-# "--quiet: quiet mode (no outputs)\n"
-# "--nmf: perform non-negative matrix factorization\n"
-# "--disk: perform disk-level training (will generate a buffer file)\n");
+    return '''
+        "usage: mf-train [options] training_set_file [model_file]\n"
+        "\n"
+        "options:\n"
+        "-l1 <lambda>,<lambda>: set L1-regularization parameters for P and Q (default 0)\n"
+        "  P and Q share the same lambda if only one lambda is specified\n"
+        "-l2 <lambda>,<lambda>: set L2-regularization parameters for P and Q (default 0.1)\n"
+        "  P and Q share the same lambda if only one lambda is specified\n"
+        "-f <loss>: set loss function (default 0)\n"
+        "  for real-valued matrix factorization\n"
+        "\t 0 -- squared error (L2-norm)\n"
+        "\t 1 -- absolute error (L1-norm)\n"
+        "\t 2 -- generalized KL-divergence\n"
+        "  for binary matrix factorization\n"
+        "\t 5 -- logarithmic loss\n"
+        "\t 6 -- squared hinge loss\n"
+        "\t 7 -- hinge loss\n"
+        "  for one-class matrix factorization\n"
+        "\t10 -- row-oriented pairwise logarithmic loss\n"
+        "\t11 -- column-oriented pairwise logarithmic loss\n"
+        "-k <dimensions>: set number of dimensions (default 8)\n"
+        "-t <iter>: set number of iterations (default 20)\n"
+        "-r <eta>: set learning rate (default 0.1)\n"
+        "-s <threads>: set number of threads (default 12)\n"
+        "-n <bins>: set number of bins (may be adjusted by LIBMF)\n"
+        "-p <path>: set path to the validation set\n"
+        "-v <fold>: set number of folds for cross validation\n"
+        "--quiet: quiet mode (no outputs)\n"
+        "--nmf: perform non-negative matrix factorization\n"
+        "--disk: perform disk-level training (will generate a buffer file)\n")
+    '''
 # }
 
 # bool is_numerical(char *str)
+
+# TODO
+def is_numerical(str):
 # {
 #     int c = 0;
+    c = 0
 #     while(*str != '\0')
+    while(???)
+    // ???
 #     {
 #         if(isdigit(*str))
 #             c++;
@@ -90,20 +98,32 @@ class Option:
 # }
 
 # Option parse_option(int argc, char **argv)
+def parse_option()
 # {
 #     vector<string> args;
+    // basically a list
+    args = []
+
 #     for(int i = 0; i < argc; i++)
 #         args.push_back(string(argv[i]));
 
+    for i in range(0, argc):
+        args.append(str(argv[i]))
+
 #     if(argc == 1)
+    if argc == 1:
 #         throw invalid_argument(train_help());
+        raise Exception(train_help)
 
 #     Option option;
+    // ?????????????????????
 
-#     mf_int i;
+#     mf_int i; // not required
 #     for(i = 1; i < argc; i++)
+    for i in range(1, argc):
 #     {
 #         if(args[i].compare("-l1") == 0)
+    // this is checking the parameters
 #         {
 #             if((i+1) >= argc)
 #                 throw invalid_argument("need to specify lambda after -l1");
@@ -315,6 +335,7 @@ class Option:
 #     }
 
 #     if(option.do_cv)
+    if self.do_cv:
 #     {
 #         if(!option.on_disk)
 #             mf_cross_validation(&tr, option.nr_folds, option.param);
@@ -356,6 +377,8 @@ class Option:
 #     }
 
 #     if(!option.on_disk)
+    if not on_disk:
+        // clear tr.R and va.R
 #     {
 #         delete[] tr.R;
 #         delete[] va.R;
